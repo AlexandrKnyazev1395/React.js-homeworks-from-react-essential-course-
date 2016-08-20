@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts search</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id='content'></div>
+
+    <script type="text/babel">
+
+
+
+        var Calculator = React.createClass({
+
+        	getInitialState() {
+        	    return {
+        	        result: "type operaton"  
+        	    };
+        	},
+
+            result: function(event) {
+                var a = +document.getElementById("a").value;
+            	var b = +document.getElementById("b").value;
+            	var result = 0;
+
+            	switch (event.target.id) {
+            		case "summ":
+            			result = a+b;
+            			break;
+            		case "diff":
+            			result = a-b;
+            			break;
+            		case "mult":
+            			result = a*b;
+            			break;
+            		default:
+            			result = 0;
+            			break;
+            	}
+
+                this.setState({
+					result: 'result = ' + result
+				})
+
+            },
+
+            render: function() {
+            	var result = "";
+                return (
+                	<div>
+	                    <input id="a" type="number" defaultValue="2" />
+	                    <input id="b" type="number" defaultValue="3" />
+	                    <button id="summ" onClick = {this.result}>+</button>
+	                    <button id="diff" onClick = {this.result}>-</button>
+	                    <button id="mult" onClick = {this.result}>*</button>
+	                    <div className="summ">
+	                    	<span>{this.state.result}</span>
+	                    </div>
+	                </div>
+                );
+            }
+        });
+
+        ReactDOM.render(
+            <Calculator />,
+            document.getElementById("content")
+        );
+
+    </script>
+</body>
+</html>

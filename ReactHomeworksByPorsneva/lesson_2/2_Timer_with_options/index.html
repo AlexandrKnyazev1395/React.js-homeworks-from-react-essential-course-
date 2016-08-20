@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+</head>
+<body>
+    <div id='mount-point'></div>
+
+    <script type="text/babel">
+        var Timer = React.createClass({
+            getInitialState: function() {
+                return {
+                    seconds: 0,
+                    isPause: false
+                };
+            },
+
+            componentDidMount: function() {
+                this.timer = setInterval(this.tick, 1000);
+            },
+
+            tick: function() {
+                this.setState({ seconds: this.state.seconds + 1 });
+            },
+
+            componentWillUnmount: function() {
+                clearInterval(this.timer);
+            },
+
+            stopTimer: function() {
+                this.setState({ seconds: 0 });
+                clearInterval(this.timer);
+                this.setState({ isPause: true });
+            },
+
+            pauseTimer: function () {
+            	if (this.state.isPause == false){
+            		clearInterval(this.timer);
+            		this.setState({ isPause: true });
+            	}
+            },
+
+            continueTimer: function () {
+            	if (this.state.isPause == true){
+            		this.timer = setInterval(this.tick, 1000);
+            		this.setState({ isPause: false });
+            	}
+            },
+
+            render: function() {
+                return (
+                	<div>
+                    	<h4> Уже прошло {this.state.seconds} секунд </h4>
+                    	<button onClick={this.stopTimer}> Stop </button>
+                    	<button onClick={this.pauseTimer}>Pause</button>
+                    	<button onClick={this.continueTimer}>Continue</button>
+                	</div>
+                );	
+            }
+        });
+
+        ReactDOM.render(
+            <Timer />,
+            document.getElementById('mount-point')
+        );
+  </script>
+</body>
+</html>
